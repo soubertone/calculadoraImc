@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
     },
     elementMessageSuccess: {
+        fontWeight: "bold",
         marginTop: 30,
         textTransform: "uppercase",
         textShadowColor: '#000',
@@ -32,6 +33,7 @@ const styles = StyleSheet.create({
         color: '#f542e0',
     },
     elementIMC: {
+        fontWeight: "bold",
         textTransform: "uppercase",
         textShadowColor: '#000',
         textShadowRadius: 1.5,

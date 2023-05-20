@@ -84,6 +84,7 @@ export default class Form extends Component {
                 justifyContent: "center",
             },
             titleText: {
+                fontWeight: "bold",
                 textTransform: "uppercase",
                 fontSize: 22
             }
