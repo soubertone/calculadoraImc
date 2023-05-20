@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
-import {StyleSheet, View} from "react-native";
+import {Keyboard, StyleSheet, View} from "react-native";
 import {TextInput, Text} from "react-native-paper";
 import MaterialButton from "./custom/materialButton";
 import MaterialTextInput from "./custom/materialTextInput";
+import ResultIMC from "./resultIMC";
 
 export default class Form extends Component {
     constructor(props) {
@@ -55,7 +56,8 @@ export default class Form extends Component {
             (this.state.weight / (this.state.height * this.state.height)).toFixed(2)
         )
         this.setTextButton("Limpar")
-        this.setMessageImc('Seu peso é: ')
+        this.setMessageImc('Seu IMC é: ')
+        Keyboard.dismiss()
     }
 
     validateFields () {
@@ -75,10 +77,26 @@ export default class Form extends Component {
             },
             element: {
                 marginHorizontal: 100,
+            },
+            title: {
+                height: 100,
+                alignItems: "center",
+                justifyContent: "center",
+            },
+            titleText: {
+                textTransform: "uppercase",
+                fontSize: 22
             }
         })
         return (
             <View style={styles.content}>
+
+                <View style={styles.title}>
+                    <Text style={styles.titleText}>
+                        Calculadora de IMC
+                    </Text>
+                </View>
+
                 <View style={styles.element}>
                     <MaterialTextInput
                         label='Altura'
@@ -103,10 +121,10 @@ export default class Form extends Component {
                     />
                 </View>
 
-                <View style={styles.element}>
-                    <Text>{this.state.messageImc}</Text>
-                    <Text>{this.state.imc}</Text>
-                </View>
+                <ResultIMC
+                    resultImc={this.state.imc}
+                    resultMessageImc={this.state.messageImc}
+                />
             </View>
         );
     }

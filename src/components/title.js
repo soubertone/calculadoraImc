@@ -15,6 +15,9 @@ export default class Title extends Component {
             },
             title: {
                 fontSize: 30,
+                opacity: .8,
+                textShadowRadius: 2.5,
+                textShadowColor: '#000',
                 color: '#fff',
                 fontWeight: "bold",
             }

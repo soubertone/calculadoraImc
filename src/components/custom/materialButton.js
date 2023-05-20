@@ -11,7 +11,6 @@ const MaterialButton = ({ title, onPress }) => {
 
 const styles = StyleSheet.create({
     button: {
-        marginTop: 25,
         marginVertical: 10,
         backgroundColor: '#2196F3',
         paddingVertical: 12,

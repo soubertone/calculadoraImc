@@ -6,7 +6,6 @@ import React from "react";
 const materialTextInput = ({label, onChangeText, value, keyboardType, placeHolder = null}) => {
     return (
         <View>
-            <Text style={styles.label}>{label}</Text>
             <TextInput
                 placeholder={placeHolder}
                 keyboardType={keyboardType}
@@ -14,6 +13,8 @@ const materialTextInput = ({label, onChangeText, value, keyboardType, placeHolde
                 onChangeText={onChangeText}
                 value={value}
                 style={styles.textInput}
+                dense={true}
+                label={label}
             />
         </View>
     )
@@ -21,10 +22,6 @@ const materialTextInput = ({label, onChangeText, value, keyboardType, placeHolde
 
 const styles = StyleSheet.create({
     textInput: {
-
-    },
-    label: {
-        marginTop: 25,
         marginVertical: 10,
     }
 });
