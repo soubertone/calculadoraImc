@@ -1,5 +1,16 @@
-import React, { Component } from 'react'
-import {StyleSheet, Text, View} from "react-native";
+import React from 'react'
+import {Alert, Share, StyleSheet, Text, View} from "react-native";
+import ShareButton from "./shareButton";
+
+function shareDispatch (imc) {
+    Share.share({
+        message: `Seu IMC foi calculado pelo OneBitHeatlh, ele está atualmente em ${imc}`
+    }).then(r => {
+        if (r.activityType) {
+            Alert.alert('Parabens, voce compartilhou seu IMC!')
+        }
+    })
+}
 
 export default function ResultIMC ({ resultMessageImc, resultImc = null }) {
     return (
@@ -10,6 +21,10 @@ export default function ResultIMC ({ resultMessageImc, resultImc = null }) {
             <Text style={styles.elementIMC}>
                 {resultImc}
             </Text>
+
+            {resultImc ? (
+                <ShareButton onPress={() => shareDispatch(resultImc)} />
+            ) : ''}
         </View>
     );
 }
@@ -39,5 +54,15 @@ const styles = StyleSheet.create({
         textShadowRadius: 1.5,
         fontSize: 70,
         color: '#f542e0',
+    },
+    elementShareButton: {
+        padding: 10,
+        borderRadius: 10,
+        backgroundColor: '#01ADDE97'
+    },
+    elementShareButtonText: {
+        color: '#fff',
+        fontSize: 15,
+        fontWeight: "bold",
     }
 })

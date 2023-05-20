@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Keyboard, StyleSheet, View} from "react-native";
-import {TextInput, Text} from "react-native-paper";
+import {Text} from "react-native-paper";
 import MaterialButton from "./custom/materialButton";
 import MaterialTextInput from "./custom/materialTextInput";
 import ResultIMC from "./custom/resultIMC";
@@ -12,7 +12,7 @@ export default class Form extends Component {
             textButton: 'Calcular',
             height: null,
             weight: null,
-            messageImc: 'Preencha o peso e altura',
+            messageImc: null,
             imc: null
         }
 
@@ -48,7 +48,7 @@ export default class Form extends Component {
         this.setWeight(null)
         this.setImc(null)
         this.setTextButton("Calcular")
-        this.setMessageImc('Preencha o peso e altura')
+        this.setMessageImc(null)
     }
 
     calculateImc () {
@@ -65,6 +65,8 @@ export default class Form extends Component {
             this.clearFields()
         } else if (this.state.height != null && this.state.weight != null) {
             this.calculateImc()
+        } else {
+            this.setMessageImc('Preencha o peso e altura')
         }
     }
 
