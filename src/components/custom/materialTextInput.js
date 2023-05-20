@@ -23,6 +23,7 @@ const materialTextInput = ({label, onChangeText, value, keyboardType, placeHolde
 const styles = StyleSheet.create({
     textInput: {
         marginVertical: 10,
+        borderRadius: 5,
     }
 });
 

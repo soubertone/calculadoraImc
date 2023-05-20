@@ -4,7 +4,7 @@ import Main from './src/components/main';
 
 export default function App() {
   return (
-      <Pressable onPress={() => Keyboard.dismiss()}>
+      <Pressable onPress={() => Keyboard.dismiss()} style={styles.content}>
         <View>
           <Title />
           <Main />
@@ -12,3 +12,9 @@ export default function App() {
       </Pressable>
   );
 }
+
+const styles = StyleSheet.create({
+    content: {
+        backgroundColor: '#fc038c',
+    }
+})

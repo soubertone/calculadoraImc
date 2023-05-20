@@ -55,7 +55,7 @@ export default class Form extends Component {
         this.setImc(
             (this.state.weight / (this.state.height * this.state.height)).toFixed(2)
         )
-        this.setTextButton("Limpar")
+        this.setTextButton("Calcular novamente")
         this.setMessageImc('Seu IMC é: ')
         Keyboard.dismiss()
     }
@@ -73,61 +73,55 @@ export default class Form extends Component {
     render() {
         const styles = StyleSheet.create({
             content: {
-                borderStyle: "solid",
-                borderTopWidth: 5,
-                borderTopColor: '#000'
+                marginTop: 20,
+                width: '100%',
             },
             element: {
-                marginHorizontal: 100,
+                marginHorizontal: 50,
             },
-            title: {
-                height: 100,
-                alignItems: "center",
-                justifyContent: "center",
-            },
-            titleText: {
-                fontWeight: "bold",
-                textTransform: "uppercase",
-                fontSize: 22
-            }
         })
         return (
             <View style={styles.content}>
+                {this.state.imc == null ?
+                    <View>
+                        <View style={styles.element}>
+                            <MaterialTextInput
+                                label='Altura'
+                                onChangeText={this.setHeight}
+                                value={this.state.height}
+                                placeHolder='Ex: 1.75'
+                                keyboardType='numeric'
+                            />
+                            <MaterialTextInput
+                                label='Peso'
+                                onChangeText={this.setWeight}
+                                value={this.state.weight}
+                                placeHolder='Ex. 65'
+                                keyboardType='numeric'
+                            />
+                        </View>
 
-                <View style={styles.title}>
-                    <Text style={styles.titleText}>
-                        Calculadora de IMC
-                    </Text>
-                </View>
-
-                <View style={styles.element}>
-                    <MaterialTextInput
-                        label='Altura'
-                        onChangeText={this.setHeight}
-                        value={this.state.height}
-                        placeHolder='Ex: 1.75'
-                        keyboardType='numeric'
-                    />
-                    <MaterialTextInput
-                        label='Peso'
-                        onChangeText={this.setWeight}
-                        value={this.state.weight}
-                        placeHolder='Ex. 65'
-                        keyboardType='numeric'
-                    />
-                </View>
-
-                <View style={styles.element}>
-                    <MaterialButton
-                        onPress={() => this.validateFields()}
-                        title={this.state.textButton}
-                    />
-                </View>
-
-                <ResultIMC
-                    resultImc={this.state.imc}
-                    resultMessageImc={this.state.messageImc}
-                />
+                        <View style={styles.element}>
+                            <MaterialButton
+                                onPress={() => this.validateFields()}
+                                title={this.state.textButton}
+                            />
+                        </View>
+                    </View>
+                    :
+                    <View>
+                        <ResultIMC
+                            resultImc={this.state.imc}
+                            resultMessageImc={this.state.messageImc}
+                        />
+                        <View style={styles.element}>
+                            <MaterialButton
+                                onPress={() => this.validateFields()}
+                                title={this.state.textButton}
+                            />
+                        </View>
+                    </View>
+                }
             </View>
         );
     }

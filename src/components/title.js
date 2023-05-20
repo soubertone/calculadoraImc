@@ -8,8 +8,7 @@ export default class Title extends Component {
     render() {
         const styles = StyleSheet.create({
             header: {
-                height: 300,
-                backgroundColor: '#fc038c',
+                height: '30%',
                 alignItems: "center",
                 justifyContent: "center",
             },
