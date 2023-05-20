@@ -4,7 +4,7 @@ import ShareButton from "./shareButton";
 
 function shareDispatch (imc) {
     Share.share({
-        message: `Seu IMC foi calculado pelo OneBitHeatlh, ele está atualmente em ${imc}`
+        message: `Seu IMC foi calculado pelo OneBitHealth, ele está atualmente em ${imc}`
     }).then(r => {
         if (r.activityType) {
             Alert.alert('Parabens, voce compartilhou seu IMC!')
