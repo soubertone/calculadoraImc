@@ -3,7 +3,7 @@ import {Keyboard, StyleSheet, View} from "react-native";
 import {TextInput, Text} from "react-native-paper";
 import MaterialButton from "./custom/materialButton";
 import MaterialTextInput from "./custom/materialTextInput";
-import ResultIMC from "./resultIMC";
+import ResultIMC from "./custom/resultIMC";
 
 export default class Form extends Component {
     constructor(props) {
