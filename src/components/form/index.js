@@ -64,6 +64,7 @@ export default class Form extends Component {
         this.setImc(null)
         this.setTextButton("Calcular")
         this.setMessageImc(null)
+        this.setErrorMessages({})
     }
 
     async calculateImc () {
