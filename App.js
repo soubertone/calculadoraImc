@@ -4,17 +4,22 @@ import Main from './src/components/main';
 
 export default function App() {
   return (
-      <Pressable onPress={() => Keyboard.dismiss()} style={styles.content}>
-        <View>
-          <Title />
+      <View style={styles.content}>
+          <Pressable onPress={() => Keyboard.dismiss()} style={styles.title}>
+            <Title />
+          </Pressable>
           <Main />
-        </View>
-      </Pressable>
+      </View>
   );
 }
 
 const styles = StyleSheet.create({
     content: {
         backgroundColor: '#fc038c',
+    },
+    title: {
+        height: '30%',
+        alignItems: "center",
+        justifyContent: "center",
     }
 })

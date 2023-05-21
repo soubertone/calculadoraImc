@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
-import {Keyboard, StyleSheet, View} from "react-native";
+import {FlatList, Keyboard, StyleSheet, Vibration, View} from "react-native";
+import MaterialButton from "../custom/materialButton";
+import MaterialTextInput from "../custom/materialTextInput";
+import ResultIMC from "../custom/resultIMC";
 import {Text} from "react-native-paper";
-import MaterialButton from "./custom/materialButton";
-import MaterialTextInput from "./custom/materialTextInput";
-import ResultIMC from "./custom/resultIMC";
+import styles from "./styles";
 
 export default class Form extends Component {
     constructor(props) {
@@ -13,13 +14,17 @@ export default class Form extends Component {
             height: null,
             weight: null,
             messageImc: null,
-            imc: null
+            errorMessages: {},
+            imc: null,
+            listImc: [],
         }
 
         this.setHeight = this.setHeight.bind(this)
         this.setWeight = this.setWeight.bind(this)
         this.setMessageImc = this.setMessageImc.bind(this)
+        this.setErrorMessages = this.setErrorMessages.bind(this)
         this.setImc = this.setImc.bind(this)
+        this.setListImc = this.setListImc.bind(this)
         this.setTextButton = this.setTextButton.bind(this)
     }
 
@@ -38,7 +43,17 @@ export default class Form extends Component {
     setMessageImc (value) {
         this.setState({messageImc: value})
     }
+    setErrorMessages (value) {
+        this.setState({ errorMessages: value})
+    }
 
+    setListImc (value) {
+        let arr = {
+            id: new Date().getTime(),
+            imc: value
+        }
+        this.setState({listImc: [ ...this.state.listImc, arr]})
+    }
     setImc (value) {
         this.setState({imc: value})
     }
@@ -51,35 +66,42 @@ export default class Form extends Component {
         this.setMessageImc(null)
     }
 
-    calculateImc () {
-        this.setImc(
-            (this.state.weight / (this.state.height * this.state.height)).toFixed(2)
-        )
+    async calculateImc () {
+        const imc = (this.state.weight / (this.state.height * this.state.height)).toFixed(2)
+        await this.setImc(imc)
+        await this.setListImc(imc)
         this.setTextButton("Calcular novamente")
         this.setMessageImc('Seu IMC é: ')
         Keyboard.dismiss()
     }
 
-    validateFields () {
+    async validateFields () {
         if (this.state.imc) {
             this.clearFields()
         } else if (this.state.height != null && this.state.weight != null) {
-            this.calculateImc()
+            await this.calculateImc()
         } else {
-            this.setMessageImc('Preencha o peso e altura')
+            let errors = {}
+            if (!this.state.height) {
+                errors.height = '*Campo Obrigatório'
+            }
+
+            if (!this.state.weight) {
+                errors.weight = '*Campo Obrigatório'
+            }
+            await Vibration.vibrate()
+            await this.setErrorMessages(errors)
         }
     }
 
     render() {
-        const styles = StyleSheet.create({
-            content: {
-                marginTop: 20,
-                width: '100%',
-            },
-            element: {
-                marginHorizontal: 50,
-            },
-        })
+        const ItemList = ({title}) => (
+            <View style={styles.viewList}>
+                <Text style={styles.textList}>
+                    {title}
+                </Text>
+            </View>
+        )
         return (
             <View style={styles.content}>
                 {this.state.imc == null ?
@@ -91,6 +113,7 @@ export default class Form extends Component {
                                 value={this.state.height}
                                 placeHolder='Ex: 1.75'
                                 keyboardType='numeric'
+                                errorMessage={this.state.errorMessages.height}
                             />
                             <MaterialTextInput
                                 label='Peso'
@@ -98,6 +121,7 @@ export default class Form extends Component {
                                 value={this.state.weight}
                                 placeHolder='Ex. 65'
                                 keyboardType='numeric'
+                                errorMessage={this.state.errorMessages.weight}
                             />
                         </View>
 
@@ -122,6 +146,14 @@ export default class Form extends Component {
                         </View>
                     </View>
                 }
+
+                <View style={styles.viewList}>
+                    <FlatList
+                        data={this.state.listImc}
+                        renderItem={({item}) => <ItemList title={item.imc} />}
+                        keyExtractor={item => item.id}
+                    />
+                </View>
             </View>
         );
     }
